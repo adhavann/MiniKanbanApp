@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:6.0
+    container_name: kanban-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: kanbanlite
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - kanban-network
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: kanban-api
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=development
+      - MONGO_URI=mongodb://mongo:27017/kanbanlite
+      - JWT_SECRET=supersecret_jwt_key_for_development
+      - PORT=8080
+    depends_on:
+      - mongo
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - kanban-network
+
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: kanban-web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_API_URL=http://localhost:8080
+    depends_on:
+      - api
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - kanban-network
+
+volumes:
+  mongo_data:
+
+networks:
+  kanban-network:
+    driver: bridge
