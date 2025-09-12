@@ -14,7 +14,7 @@ async function bootstrap() {
   const tasksService = app.get(TasksService);
 
   try {
-    console.log('🌱 Starting database seeding...');
+    console.log('Starting database seeding...');
 
     // Create admin user
     const adminPasswordHash = await bcrypt.hash('Admin@123', 10);
@@ -24,7 +24,7 @@ async function bootstrap() {
       passwordHash: adminPasswordHash,
       role: UserRole.ADMIN,
     });
-    console.log('✅ Admin user created');
+    console.log('Admin user created');
 
     // Create member user
     const memberPasswordHash = await bcrypt.hash('Member@123', 10);
@@ -34,7 +34,7 @@ async function bootstrap() {
       passwordHash: memberPasswordHash,
       role: UserRole.MEMBER,
     });
-    console.log('✅ Member user created');
+    console.log('Member user created');
 
     // Create a project
     const project = await projectsService.create(
@@ -45,7 +45,7 @@ async function bootstrap() {
       },
       admin._id.toString()
     );
-    console.log('✅ Project created');
+    console.log('Project created');
 
     // Create sample tasks
     const tasks = [
@@ -134,15 +134,15 @@ async function bootstrap() {
     for (const taskData of tasks) {
       await tasksService.create(project._id.toString(), taskData, admin._id.toString(), UserRole.ADMIN);
     }
-    console.log('✅ Sample tasks created');
+    console.log('Sample tasks created');
 
-    console.log('🎉 Database seeding completed successfully!');
-    console.log('\n📋 Test Accounts:');
+    console.log('Database seeding completed successfully!');
+    console.log('Test Accounts:');
     console.log('Admin: admin@example.com / Admin@123');
     console.log('Member: member@example.com / Member@123');
 
   } catch (error) {
-    console.error('❌ Error during seeding:', error);
+    console.error('Error during seeding:', error);
   } finally {
     await app.close();
   }

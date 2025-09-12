@@ -48,8 +48,9 @@ The application comes with pre-seeded test accounts:
 
 
 
-# Running Application
-# Local Dev setup
+#### Running Application
+#### Local Dev setup
+
 # Installing Dependencies
    # Backend
    cd backend
@@ -63,7 +64,22 @@ The application comes with pre-seeded test accounts:
 Once you have docker deamon running,
 cd into the mini-kanban
 
-       docker-compose up --build 
+       docker-compose build
+       docker-compose up 
+
+# Seed the database with users to login
+once the dockers are running
+       cd backend
+       npm run seed
+
+Now  you can actually start using the application at http://localhost:3000
+# Application
+-  URL : http://localhost:3000
+
+# API Documentation
+Interactive API documentation is available at:
+- **Swagger UI**: http://localhost:8080/api/docs
+
 
 # View all logs
 docker-compose logs
