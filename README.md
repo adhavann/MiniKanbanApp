@@ -90,10 +90,12 @@ docker-compose logs web
 docker-compose logs mongo
 
 
-# API DOcumentation
+# API Documentation
 Interactive API documentation is available at:
 - **Swagger UI**: http://localhost:8080/api/docs
 
+# API endpoint
+    -- http://localhost:8080/
 
 
 # Functinalities implemented
